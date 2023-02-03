@@ -27,12 +27,23 @@
   </style>
   
   <script>
-    const handleResponse = (response) => {
+    const handleResponse = async (response) => {
+      const defaultHtml = '<p>Status code not implemented</p>';
+      const html = {
+        200: '<b>Success!</b>',
+        400: '<i>Bad request</i>',
+        404: '<b>Not found</b>',
+      }[response.status] || defaultHtml;
 
+      const responseBody = await response.json();
+
+      document.querySelector('#content').innerHTML = 
+        html + `<p></p>`
     };
-    
+  
     const sendFetch = (url) => {
-
+      fetch(url)
+        .then(response => handleResponse(response))
       //handleResponse(response);
     };
 
@@ -41,7 +52,7 @@
       const badRequestButton = document.querySelector("#badRequest");
       const notFoundButton = document.querySelector("#notFound");
 
-      successButton.addEventListener('click', () => sendFetch('/success'));
+      successButton.addEventListener('click', () => sendFetch('/success?yes=no'));
       badRequestButton.addEventListener('click', () => sendFetch('/badRequest'));
       notFoundButton.addEventListener('click', () => sendFetch('/notFound'));
       
