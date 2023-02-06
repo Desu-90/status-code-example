@@ -38,7 +38,8 @@
       const responseBody = await response.json();
 
       document.querySelector('#content').innerHTML = 
-        html + `<p></p>`
+        html + `<p>${responseBody.message}</p>`
+        ;
     };
   
     const sendFetch = (url) => {
@@ -53,7 +54,7 @@
       const notFoundButton = document.querySelector("#notFound");
 
       successButton.addEventListener('click', () => sendFetch('/success?yes=no'));
-      badRequestButton.addEventListener('click', () => sendFetch('/badRequest'));
+      badRequestButton.addEventListener('click', () => sendFetch('/badRequest?valid=true&name=dennis'));
       notFoundButton.addEventListener('click', () => sendFetch('/notFound'));
       
     };
